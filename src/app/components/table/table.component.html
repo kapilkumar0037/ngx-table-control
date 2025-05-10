@@ -1,31 +1,34 @@
-
 <table class="table">
     <thead>
-      <tr>
-        <th scope="col">#</th>
-        <th scope="col">First</th>
-        <th scope="col">Last</th>
-        <th scope="col">Handle</th>
-      </tr>
+        <tr>
+            @for(col of columns(); track col){
+            <th scope="col" class="{{col.sortDirection !== undefined ? 'sort': ''}}"  (click)="sort(col)">
+                {{col.headerText}}
+                @if(col.sortDirection === 'asc'){↑}
+                @if(col.sortDirection === 'desc'){↓}
+                @if(col.sortDirection === ''){↓↑}
+            </th>
+            }
+        </tr>
     </thead>
     <tbody>
-      <tr>
-        <th scope="row">1</th>
-        <td>Mark</td>
-        <td>Otto</td>
-        <td>@mdo</td>
-      </tr>
-      <tr>
-        <th scope="row">2</th>
-        <td>Jacob</td>
-        <td>Thornton</td>
-        <td>@fat</td>
-      </tr>
-      <tr>
-        <th scope="row">3</th>
-        <td>Larry</td>
-        <td>the Bird</td>
-        <td>@twitter</td>
-      </tr>
+        @if(sortedData().length >= 0){
+        @for(data of sortedData(); track data){
+        <tr>
+            @for(col of columns(); track col){
+            @if(col.field){
+            <td>{{data[col.field]}}</td>
+            } @else if(col.columnType == 'action'){
+            <td>
+                @for(action of col.actions; track action){
+                <button [disabled]="action?.disabled(data)" type="button" class="btn btn-primary me-2"
+                    (click)="actionClick(action, data)">{{action.label}}</button>
+                }
+            </td>
+            }
+            }
+        </tr>
+        }
+        }
     </tbody>
-  </table>
+</table>

@@ -1,22 +1,21 @@
 export interface IColumnDef<T> {
     headerText: string;
-    field?: keyof T;
-    sortable?: boolean;
-    filterable?: boolean;
+    field?: keyof T;    
     columnType?: string;
-    actions?: IActions[];
+    actions?: IActions<T>[];
+    sortable?: boolean;
+    sortDirection?: 'asc' | 'desc' | '';
 }
 
-export interface IActions {
-    action: string;
+export interface IActions<T> {
+    label: string;
     icon: string;
     tooltip: string;
     actionParams?: string[];
-    disabled?: () => boolean;
+    disabled?: (data: T) => boolean;
 }
 
-export interface IUser {
-    id: number;
+export interface IUser {    
     name: string;
     email: string;
     role: string;

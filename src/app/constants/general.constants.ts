@@ -4,28 +4,40 @@ export const COLUMN_DEFINITIONS: IColumnDef<IUser>[] = [
     {
         headerText: "Name",
         field: "name",
-        sortable: true
+        sortable: true,
+        sortDirection: "asc"
     },
     {
         headerText: "Email",
         field: "email"
     },
     {
+        headerText: "Role",
+        field: "role",
+        sortable: true,
+        sortDirection: ""
+    },
+    {
+        headerText: "Status",
+        field: "status",
+        sortable: true,
+        sortDirection: ""
+    },
+    {
         headerText: "Action",
         columnType: "action",
         actions: [
             {
-                action: "Edit",
+                label: "Edit",
                 icon: "pi pi-pencil",
                 tooltip: "Edit",
-                actionParams: ["id"]
+                disabled: (data: IUser) => data.status=== "inactive"
             },
             {
-                action: "Delete",
+                label: "Delete",
                 icon: "pi pi-trash",
                 tooltip: "Delete",
-                actionParams: ["id"],
-                disabled: () => false
+                disabled: (data: IUser) => data.role === "admin"
             }
         ]
     },
